@@ -70,25 +70,25 @@ export function ODSGrid() {
             padding: '4px 12px',
             borderRadius: '12px',
             fontWeight: 800,
-            fontSize: '14px',
+            fontSize: 'clamp(12px, 1.4vw, 14px)',
             boxShadow: 'inset -1px -1px 3px rgba(0,0,0,0.1)'
           }}>
             {state.selectedOds.length}
           </span>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+          <span style={{ fontSize: 'clamp(12px, 1.4vw, 14px)', fontWeight: 600, color: 'var(--text-secondary)' }}>
             ODS Selecionados (Max 17)
           </span>
         </div>
 
         {/* Buttons list */}
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          <button type="button" onClick={selectAll} className="clay-button" style={{ fontSize: '13px', padding: '8px 14px' }}>
+          <button type="button" onClick={selectAll} className="clay-button" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', padding: '8px 14px' }}>
             {t('selection_all_btn')}
           </button>
-          <button type="button" onClick={clearSelection} className="clay-button" style={{ fontSize: '13px', padding: '8px 14px' }}>
+          <button type="button" onClick={clearSelection} className="clay-button" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', padding: '8px 14px' }}>
             {t('selection_clear_btn')}
           </button>
-          <button type="button" onClick={randomizeSelection} className="clay-button" style={{ fontSize: '13px', padding: '8px 14px' }}>
+          <button type="button" onClick={randomizeSelection} className="clay-button" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', padding: '8px 14px' }}>
             🎲 {t('selection_random_btn')}
           </button>
         </div>

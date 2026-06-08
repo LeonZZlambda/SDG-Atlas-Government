@@ -1,7 +1,7 @@
 import { usePlatform } from '../context/PlatformContext';
 import { useTranslation } from '../i18n';
 import { SDG_METADATA } from '../utils/projectGenerator';
-import { getSDGIcon } from './ODSIcons';
+import { getSDGIcon, getIcon } from './ODSIcons';
 
 export function Dashboard() {
   const { state, dispatch } = usePlatform();
@@ -73,7 +73,7 @@ export function Dashboard() {
       {/* SVG FREQUENCY CHART */}
       {totalProjects > 0 && (
         <div className="clay-card" style={{ marginBottom: '32px', padding: '24px' }}>
-          <h3 style={{ fontSize: '18px', marginBottom: '20px', textAlign: 'left' }}>
+          <h3 style={{ fontSize: 'clamp(1rem, 1.8vw, 1.125rem)', marginBottom: '20px', textAlign: 'left' }}>
             {t('dashboard_frequency_chart')}
           </h3>
           <div style={{ overflowX: 'auto', paddingBottom: '10px' }}>
@@ -110,7 +110,7 @@ export function Dashboard() {
                         y={y - 6}
                         textAnchor="middle"
                         fill="var(--text-primary)"
-                        style={{ fontSize: '10px', fontWeight: '800', fontFamily: 'var(--font-heading)' }}
+                        style={{ fontSize: 'clamp(9px, 1.1vw, 10px)', fontWeight: '800', fontFamily: 'var(--font-heading)' }}
                       >
                         {count}
                       </text>
@@ -121,7 +121,7 @@ export function Dashboard() {
                       y={chartHeight + 20}
                       textAnchor="middle"
                       fill="var(--text-secondary)"
-                      style={{ fontSize: '11px', fontWeight: '700', fontFamily: 'var(--font-heading)' }}
+                      style={{ fontSize: 'clamp(10px, 1.2vw, 11px)', fontWeight: '700', fontFamily: 'var(--font-heading)' }}
                     >
                       {id}
                     </text>
@@ -159,8 +159,8 @@ export function Dashboard() {
                 {/* Header row */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
                   <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: 800, margin: '0 0 4px 0' }}>{p.name}</h4>
-                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                    <h4 style={{ fontSize: 'clamp(1rem, 1.8vw, 1.125rem)', fontWeight: 800, margin: '0 0 4px 0' }}>{p.name}</h4>
+                    <span style={{ fontSize: 'clamp(10px, 1.1vw, 11px)', color: 'var(--text-muted)' }}>
                       Criado em: {new Date(p.createdAt).toLocaleDateString(state.language, { dateStyle: 'medium' })}
                     </span>
                   </div>
@@ -170,14 +170,14 @@ export function Dashboard() {
                     type="button"
                     onClick={() => handleDelete(p.id)}
                     className="clay-button clay-button-danger"
-                    style={{ padding: '4px 10px', fontSize: '11px' }}
+                    style={{ padding: '4px 10px', fontSize: 'clamp(10px, 1.1vw, 11px)' }}
                   >
                     Excluir
                   </button>
                 </div>
 
                 {/* Summary */}
-                <p style={{ fontSize: '13px', margin: 0, color: 'var(--text-secondary)' }}>
+                <p style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', margin: 0, color: 'var(--text-secondary)' }}>
                   {p.summary}
                 </p>
 
@@ -193,7 +193,7 @@ export function Dashboard() {
                           color: '#fff',
                           padding: '3px 8px',
                           borderRadius: '8px',
-                          fontSize: '11px',
+                          fontSize: 'clamp(10px, 1.1vw, 11px)',
                           fontWeight: 700,
                           display: 'flex',
                           alignItems: 'center',
@@ -214,7 +214,7 @@ export function Dashboard() {
                   display: 'flex',
                   gap: '16px',
                   flexWrap: 'wrap',
-                  fontSize: '12px',
+                  fontSize: 'clamp(10px, 1.2vw, 12px)',
                   color: 'var(--text-muted)',
                   paddingTop: '10px',
                   marginTop: '10px',
@@ -231,7 +231,9 @@ export function Dashboard() {
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-muted)' }}>
-            <span style={{ fontSize: '40px', display: 'block', marginBottom: '8px' }}>🗃️</span>
+            <div style={{ width: 'clamp(40px, 7vw, 56px)', height: 'clamp(40px, 7vw, 56px)', margin: '0 auto 8px' }}>
+              {getIcon('archive', '', 'var(--text-muted)')}
+            </div>
             <p>{t('dashboard_no_projects')}</p>
           </div>
         )}

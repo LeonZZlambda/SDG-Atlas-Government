@@ -48,7 +48,7 @@ export function ODSCard({ id, name, shortDesc, color, isSelected, onToggle }: OD
         position: 'absolute',
         bottom: '-8px',
         right: '-4px',
-        fontSize: '72px',
+        fontSize: 'clamp(48px, 8vw, 72px)',
         fontWeight: 900,
         opacity: isSelected ? 0.12 : 0.05,
         fontFamily: 'var(--font-heading)',
@@ -91,7 +91,7 @@ export function ODSCard({ id, name, shortDesc, color, isSelected, onToggle }: OD
       {/* Body: título + descrição — sempre logo abaixo do header */}
       <div style={{ zIndex: 1 }}>
         <h3 style={{
-          fontSize: '13px',
+          fontSize: 'clamp(11px, 1.3vw, 13px)',
           margin: '0 0 5px 0',
           fontWeight: 800,
           lineHeight: 1.3,
@@ -101,7 +101,7 @@ export function ODSCard({ id, name, shortDesc, color, isSelected, onToggle }: OD
           {id}. {name}
         </h3>
         <p style={{
-          fontSize: '11px',
+          fontSize: 'clamp(10px, 1.1vw, 11px)',
           margin: 0,
           lineHeight: 1.4,
           color: isSelected ? 'rgba(255,255,255,0.82)' : 'var(--text-secondary)',

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'preact/hooks';
 import { usePlatform } from '../context/PlatformContext';
 import { useTranslation } from '../i18n';
+import { getIcon } from './ODSIcons';
 
 export function ProjectPlanner() {
   const { state, dispatch } = usePlatform();
@@ -30,7 +31,9 @@ export function ProjectPlanner() {
   if (!project) {
     return (
       <div className="clay-card" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-        <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📝</span>
+        <div style={{ width: 'clamp(48px, 8vw, 72px)', height: 'clamp(48px, 8vw, 72px)', margin: '0 auto 16px' }}>
+          {getIcon('document', '', 'var(--text-muted)')}
+        </div>
         <p>{t('planner_no_ods_selected')}</p>
         <button
           type="button"
@@ -253,7 +256,7 @@ export function ProjectPlanner() {
         {/* EDITABLE PLAN DETAILS */}
         <div className="clay-card" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label htmlFor="proj-name-field" style={{ fontSize: '13px', fontWeight: 800, color: 'var(--text-secondary)' }}>
+            <label htmlFor="proj-name-field" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 800, color: 'var(--text-secondary)' }}>
               {t('planner_suggested_name')}
             </label>
             <input
@@ -269,7 +272,7 @@ export function ProjectPlanner() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label htmlFor="proj-summary-field" style={{ fontSize: '13px', fontWeight: 800, color: 'var(--text-secondary)' }}>
+            <label htmlFor="proj-summary-field" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 800, color: 'var(--text-secondary)' }}>
               {t('planner_project_summary')}
             </label>
             <textarea
@@ -286,7 +289,7 @@ export function ProjectPlanner() {
           </div>
 
           <div style={{ paddingTop: '16px', marginTop: '16px', boxShadow: 'inset 0 1px 0 var(--border-dark)' }}>
-            <h3 style={{ fontSize: '18px', marginBottom: '12px' }}>
+            <h3 style={{ fontSize: 'clamp(1rem, 1.8vw, 1.125rem)', marginBottom: '12px' }}>
               {t('planner_objectives')}
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -306,7 +309,7 @@ export function ProjectPlanner() {
                       className="clay-checkbox"
                     />
                     <span style={{
-                      fontSize: '13px',
+                      fontSize: 'clamp(11px, 1.2vw, 13px)',
                       textDecoration: checked ? 'line-through' : 'none',
                       color: checked ? 'var(--text-muted)' : 'var(--text-primary)'
                     }}>
@@ -334,7 +337,7 @@ export function ProjectPlanner() {
           
           {/* Resource Indicators Summary */}
           <div className="clay-card">
-            <h3 style={{ fontSize: '16px', fontWeight: 800, marginBottom: '16px' }}>
+            <h3 style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1rem)', fontWeight: 800, marginBottom: '16px' }}>
               {t('planner_title') ? 'Métricas Operacionais' : 'Métricas Operacionais'}
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -347,20 +350,20 @@ export function ProjectPlanner() {
                 { label: 'Alcance Estimado',                value: project.reachEstimated.toLocaleString() },
               ].map(({ label, value }) => (
                 <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '8px', gap: '12px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
-                  <span style={{ fontSize: '13px', color: 'var(--text-secondary)', flexShrink: 0 }}>{label}</span>
-                  <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', textAlign: 'right' }}>{value}</span>
+                  <span style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', color: 'var(--text-secondary)', flexShrink: 0 }}>{label}</span>
+                  <span style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700, color: 'var(--text-primary)', textAlign: 'right' }}>{value}</span>
                 </div>
               ))}
               <div style={{ paddingTop: '4px' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '4px' }}>Público Alvo</span>
-                <span style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{project.targetAudience}</span>
+                <span style={{ fontSize: 'clamp(10px, 1.1vw, 11px)', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '4px' }}>Público Alvo</span>
+                <span style={{ fontSize: 'clamp(11px, 1.2vw, 12px)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{project.targetAudience}</span>
               </div>
             </div>
           </div>
 
           {/* Export Center */}
           <div className="clay-card" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Centro de Exportação</h3>
+            <h3 style={{ fontSize: 'clamp(1rem, 1.8vw, 1.125rem)', marginBottom: '8px' }}>Centro de Exportação</h3>
             
             <button type="button" onClick={exportDOCX} className="clay-button" style={{ justifyContent: 'flex-start', gap: '10px', width: '100%' }}>
               📄 {t('export_docx')}

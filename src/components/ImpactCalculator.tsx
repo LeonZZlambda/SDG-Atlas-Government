@@ -1,5 +1,6 @@
 import { usePlatform } from '../context/PlatformContext';
 import { useTranslation } from '../i18n';
+import { getIcon } from './ODSIcons';
 import { motion } from 'framer-motion';
 
 export function ImpactCalculator() {
@@ -11,7 +12,9 @@ export function ImpactCalculator() {
   if (!project) {
     return (
       <div className="clay-card" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-        <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>🎛️</span>
+        <div style={{ width: 'clamp(48px, 8vw, 72px)', height: 'clamp(48px, 8vw, 72px)', margin: '0 auto 16px' }}>
+          {getIcon('sliders', '', 'var(--text-muted)')}
+        </div>
         <p>{t('planner_no_ods_selected')}</p>
         <button
           type="button"
@@ -48,13 +51,13 @@ export function ImpactCalculator() {
         
         {/* LEFT PANEL: SIMULATION SLIDERS */}
         <div className="clay-card" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <h3 style={{ fontSize: '20px', paddingBottom: '10px', marginBottom: '20px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
+          <h3 style={{ fontSize: 'clamp(1.1rem, 2vw, 1.25rem)', paddingBottom: '10px', marginBottom: '20px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
             Parâmetros do Cenário
           </h3>
 
           {/* Slider 1: Beneficiaries */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: 700 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700 }}>
               <label htmlFor="input-beneficiaries">{t('calculator_input_beneficiaries')}</label>
               <span style={{ color: 'var(--accent-color)' }}>{state.inputs.beneficiaries}</span>
             </div>
@@ -72,7 +75,7 @@ export function ImpactCalculator() {
 
           {/* Slider 2: Budget */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: 700 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700 }}>
               <label htmlFor="input-budget">{t('calculator_input_budget')}</label>
               <span style={{ color: 'var(--accent-color)' }}>${state.inputs.budget.toLocaleString()}</span>
             </div>
@@ -90,7 +93,7 @@ export function ImpactCalculator() {
 
           {/* Slider 3: Duration */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: 700 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700 }}>
               <label htmlFor="input-duration">{t('calculator_input_duration')}</label>
               <span style={{ color: 'var(--accent-color)' }}>{state.inputs.duration} Meses</span>
             </div>
@@ -108,7 +111,7 @@ export function ImpactCalculator() {
 
           {/* Slider 4: Team size */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: 700 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700 }}>
               <label htmlFor="input-teamsize">{t('calculator_input_team')}</label>
               <span style={{ color: 'var(--accent-color)' }}>{state.inputs.teamSize} Colaboradores</span>
             </div>
@@ -126,7 +129,7 @@ export function ImpactCalculator() {
 
           {/* Dropdown 5: Risk Level */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label htmlFor="input-risk" style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)' }}>
+            <label htmlFor="input-risk" style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700, color: 'var(--text-secondary)' }}>
               {t('calculator_input_risk')}
             </label>
             <select
@@ -149,8 +152,8 @@ export function ImpactCalculator() {
           <div className="clay-card" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.8fr', gap: '20px', alignItems: 'center' }}>
             {/* 1. Main radial impact gauge */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ position: 'relative', width: '120px', height: '120px' }}>
-                <svg width="120" height="120" viewBox="0 0 120 120" style={{ transform: 'rotate(-90deg)' }}>
+              <div style={{ position: 'relative', width: 'clamp(100px, 12vw, 120px)', height: 'clamp(100px, 12vw, 120px)' }}>
+                <svg width="100%" height="100%" viewBox="0 0 120 120" style={{ transform: 'rotate(-90deg)' }}>
                   <circle cx="60" cy="60" r={strokeRadius} fill="transparent" stroke="var(--bg-tertiary)" strokeWidth="10" />
                   <motion.circle
                     cx="60"
@@ -173,11 +176,11 @@ export function ImpactCalculator() {
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  <span style={{ fontSize: '24px', fontWeight: 800 }}>{project.overallImpactScore}</span>
-                  <span style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Index</span>
+                  <span style={{ fontSize: 'clamp(18px, 3vw, 24px)', fontWeight: 800 }}>{project.overallImpactScore}</span>
+                  <span style={{ fontSize: 'clamp(9px, 1.1vw, 10px)', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Index</span>
                 </div>
               </div>
-              <h4 style={{ fontSize: '13px', marginTop: '12px', fontWeight: 700 }}>
+              <h4 style={{ fontSize: 'clamp(11px, 1.3vw, 13px)', marginTop: '12px', fontWeight: 700 }}>
                 {t('calculator_score_impact')}
               </h4>
             </div>
@@ -186,7 +189,7 @@ export function ImpactCalculator() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {/* Reach bar */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 700 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(10px, 1.2vw, 12px)', fontWeight: 700 }}>
                   <span>{t('calculator_score_reach')}</span>
                   <span>~{project.reachEstimated}</span>
                 </div>
@@ -202,7 +205,7 @@ export function ImpactCalculator() {
 
               {/* Sustainability scale */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 700 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(10px, 1.2vw, 12px)', fontWeight: 700 }}>
                   <span>{t('calculator_score_sustainability')}</span>
                   <span>{project.sustainabilityIndex}/100</span>
                 </div>
@@ -218,7 +221,7 @@ export function ImpactCalculator() {
 
               {/* SDG Alignment scale */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 700 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(10px, 1.2vw, 12px)', fontWeight: 700 }}>
                   <span>{t('calculator_score_alignment')}</span>
                   <span>{project.alignmentScore}/100</span>
                 </div>
@@ -236,14 +239,14 @@ export function ImpactCalculator() {
 
           {/* Explainability Breakdown Card */}
           <div className="clay-card">
-            <h3 style={{ fontSize: '16px', marginBottom: '14px', paddingBottom: '6px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
+            <h3 style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1rem)', marginBottom: '14px', paddingBottom: '6px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
               {t('calculator_explain_title')}
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {project.scoreBreakdown.map((item: any, i: number) => {
                 if (item.value === 0) return null;
                 return (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(11px, 1.2vw, 13px)' }}>
                     <span style={{ color: 'var(--text-secondary)' }}>{item.name}</span>
                     <span style={{ fontWeight: 700, color: item.isPositive ? '#10b981' : '#ef4444' }}>
                       {item.value > 0 ? `+${item.value}` : item.value}
@@ -261,7 +264,7 @@ export function ImpactCalculator() {
               ? 'inset -2px -2px 6px rgba(239,68,68,0.1), inset 2px 2px 6px rgba(255,255,255,0.8)'
               : 'inset -2px -2px 6px rgba(16,185,129,0.1), inset 2px 2px 6px rgba(255,255,255,0.8)'
           }}>
-            <h3 style={{ fontSize: '16px', marginBottom: '14px', color: project.tradeoffs.length > 0 ? '#ef4444' : '#10b981', paddingBottom: '8px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
+            <h3 style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1rem)', marginBottom: '14px', color: project.tradeoffs.length > 0 ? '#ef4444' : '#10b981', paddingBottom: '8px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
               {t('calculator_tradeoffs_title')}
             </h3>
             {project.tradeoffs.length > 0 ? (
@@ -289,7 +292,7 @@ export function ImpactCalculator() {
                           <line x1="12" y1="9" x2="12" y2="13"/>
                           <line x1="12" y1="17" x2="12.01" y2="17"/>
                         </svg>
-                        <span style={{ fontSize: '12px', fontWeight: 700, color: '#ef4444', lineHeight: 1.4 }}>{title}</span>
+                        <span style={{ fontSize: 'clamp(10px, 1.2vw, 12px)', fontWeight: 700, color: '#ef4444', lineHeight: 1.4 }}>{title}</span>
                       </div>
                       {rec && (
                         <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', paddingLeft: '22px' }}>
@@ -297,7 +300,7 @@ export function ImpactCalculator() {
                             <polyline points="9 11 12 14 22 4"/>
                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
                           </svg>
-                          <span style={{ fontSize: '11px', color: '#10b981', fontWeight: 600, lineHeight: 1.4 }}>
+                          <span style={{ fontSize: 'clamp(10px, 1.1vw, 11px)', color: '#10b981', fontWeight: 600, lineHeight: 1.4 }}>
                             <strong>{recLabel}:</strong> {rec}
                           </span>
                         </div>
@@ -312,7 +315,7 @@ export function ImpactCalculator() {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                   <polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
-                <p style={{ fontSize: '12px', color: '#10b981', margin: 0, fontWeight: 600 }}>
+                <p style={{ fontSize: 'clamp(10px, 1.2vw, 12px)', color: '#10b981', margin: 0, fontWeight: 600 }}>
                   {t('calculator_no_tradeoffs')}
                 </p>
               </div>

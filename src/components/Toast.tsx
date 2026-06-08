@@ -62,13 +62,13 @@ function ToastCard({ toast, onClose }: { toast: { id: string; message: string; t
       role="alert"
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <span style={{ fontSize: '18px', fontWeight: 'bold' }}>
+        <span style={{ fontSize: 'clamp(14px, 1.5vw, 18px)', fontWeight: 'bold' }}>
           {toast.type === 'success' && '✓'}
           {toast.type === 'warning' && '⚠'}
           {toast.type === 'error' && '✗'}
           {toast.type === 'info' && 'ℹ'}
         </span>
-        <p style={{ margin: 0, color: 'inherit', fontSize: '14px', fontWeight: 500 }}>
+        <p style={{ margin: 0, color: 'inherit', fontSize: 'clamp(12px, 1.2vw, 14px)', fontWeight: 500 }}>
           {toast.message}
         </p>
       </div>
@@ -78,7 +78,7 @@ function ToastCard({ toast, onClose }: { toast: { id: string; message: string; t
           background: 'none',
           border: 'none',
           color: 'inherit',
-          fontSize: '18px',
+          fontSize: 'clamp(14px, 1.5vw, 18px)',
           cursor: 'pointer',
           padding: '0 0 0 12px',
           opacity: 0.8

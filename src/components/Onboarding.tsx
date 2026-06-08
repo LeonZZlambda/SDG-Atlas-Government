@@ -109,7 +109,7 @@ export function Onboarding() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '48px',
+              fontSize: 'clamp(32px, 6vw, 48px)',
               marginBottom: '24px',
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(0,0,0,0.2), inset 4px 4px 8px rgba(255,255,255,0.3)',
               border: '1px solid rgba(255,255,255,0.2)'
@@ -117,10 +117,10 @@ export function Onboarding() {
               {currentSlide.icon}
             </div>
 
-            <h2 style={{ fontSize: '24px', marginBottom: '16px', fontFamily: 'var(--font-heading)' }}>
+            <h2 style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.5rem)', marginBottom: '16px', fontFamily: 'var(--font-heading)' }}>
               {currentSlide.title}
             </h2>
-            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', marginBottom: '32px' }}>
+            <p style={{ fontSize: 'clamp(0.9rem, 1.2vw, 0.95rem)', color: 'var(--text-secondary)', marginBottom: '32px' }}>
               {currentSlide.desc}
             </p>
           </motion.div>
@@ -149,7 +149,7 @@ export function Onboarding() {
             className="clay-button clay-button-primary"
             style={{
               padding: '12px 24px',
-              fontSize: '15px',
+              fontSize: 'clamp(0.9rem, 1.2vw, 0.95rem)',
               boxShadow: 'var(--clay-button-shadow)'
             }}
           >

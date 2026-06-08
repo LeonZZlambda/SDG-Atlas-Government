@@ -219,11 +219,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-p { color: var(--text-secondary); line-height: 1.65; }
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+h4 { font-size: clamp(1.1rem, 2vw, 1.5rem); }
+h5 { font-size: clamp(1rem, 1.8vw, 1.25rem); }
+h6 { font-size: clamp(0.875rem, 1.5vw, 1rem); }
+
+p { color: var(--text-secondary); line-height: 1.65; font-size: clamp(0.9rem, 1.2vw, 1rem); }
 
 button, input, select, textarea {
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
 }
 
 a { color: var(--accent-color); text-decoration: none; }
@@ -917,6 +924,73 @@ a { color: var(--accent-color); text-decoration: none; }
 @media (max-width: 600px) {
   .main-content { padding: var(--space-sm); }
   .clay-card { padding: var(--space-md); }
+}
+
+/* ── 4K and Ultra-Wide Screens (2560px+) ─────────────────── */
+@media (min-width: 2560px) {
+  html { font-size: 18px; }
+  
+  :root {
+    --space-xxs: 5px;
+    --space-xs:  10px;
+    --space-sm:  15px;
+    --space-md:  20px;
+    --space-lg:  30px;
+    --space-xl:  40px;
+    --space-2xl: 60px;
+    
+    --sidebar-width: 320px;
+  }
+  
+  .main-content { padding: var(--space-2xl); }
+  .clay-card { padding: var(--space-xl); }
+  
+  .grid-metrics {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+  }
+  
+  .grid-2col,
+  .grid-equal-2col,
+  .grid-calc-2col {
+    gap: var(--space-2xl);
+  }
+  
+  .ods-grid {
+    grid-template-columns: repeat(auto-fill, minmax(clamp(180px, 16vw, 260px), 1fr));
+    gap: var(--space-lg);
+  }
+}
+
+/* ── Large Desktop Screens (1920px-2559px) ─────────────────── */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  html { font-size: 17px; }
+  
+  :root {
+    --space-lg:  28px;
+    --space-xl:  36px;
+    --space-2xl: 54px;
+    
+    --sidebar-width: 300px;
+  }
+  
+  .main-content { padding: var(--space-xl); }
+  .clay-card { padding: var(--space-lg); }
+  
+  .grid-metrics {
+    gap: var(--space-lg);
+  }
+  
+  .grid-2col,
+  .grid-equal-2col,
+  .grid-calc-2col {
+    gap: var(--space-xl);
+  }
+  
+  .ods-grid {
+    grid-template-columns: repeat(auto-fill, minmax(clamp(160px, 15vw, 240px), 1fr));
+    gap: var(--space-md);
+  }
 }
 
 /* ── Print Styles ───────────────────────────────────────── */
