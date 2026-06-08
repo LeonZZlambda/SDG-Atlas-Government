@@ -285,7 +285,7 @@ export function ProjectPlanner() {
             />
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border-dark)', paddingTop: '16px' }}>
+          <div style={{ paddingTop: '16px', marginTop: '16px', boxShadow: 'inset 0 1px 0 var(--border-dark)' }}>
             <h3 style={{ fontSize: '18px', marginBottom: '12px' }}>
               {t('planner_objectives')}
             </h3>
@@ -346,7 +346,7 @@ export function ProjectPlanner() {
                 { label: 'Alinhamento ODS',                 value: `${project.alignmentScore}/100` },
                 { label: 'Alcance Estimado',                value: project.reachEstimated.toLocaleString() },
               ].map(({ label, value }) => (
-                <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-dark)', paddingBottom: '8px', gap: '12px' }}>
+                <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '8px', gap: '12px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
                   <span style={{ fontSize: '13px', color: 'var(--text-secondary)', flexShrink: 0 }}>{label}</span>
                   <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)', textAlign: 'right' }}>{value}</span>
                 </div>

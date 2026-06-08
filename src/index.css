@@ -255,7 +255,6 @@ a { color: var(--accent-color); text-decoration: none; }
   backdrop-filter: blur(16px) saturate(1.4);
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
   border-radius: var(--radius-lg);
-  border: 1.5px solid var(--border-color);
   box-shadow: var(--clay-card-shadow);
   padding: var(--space-lg);
   transition: box-shadow 0.25s ease, transform 0.2s ease;
@@ -274,7 +273,6 @@ a { color: var(--accent-color); text-decoration: none; }
   gap: var(--space-xs);
   padding: 9px var(--space-md);
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--border-color);
   background: var(--bg-glass);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -457,7 +455,6 @@ a { color: var(--accent-color); text-decoration: none; }
   background: var(--sidebar-bg);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border-right: 1.5px solid var(--border-color);
   box-shadow: var(--clay-sidebar-shadow);
   flex-shrink: 0;
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -565,7 +562,6 @@ a { color: var(--accent-color); text-decoration: none; }
 .sidebar-nav-item:hover {
   background: var(--bg-glass);
   color: var(--text-primary);
-  border-color: var(--border-color);
   box-shadow: var(--clay-card-shadow);
   transform: translateX(3px);
 }
@@ -675,7 +671,6 @@ a { color: var(--accent-color); text-decoration: none; }
   background: var(--sidebar-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1.5px solid var(--border-color);
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   contain: layout style;
 }
@@ -731,7 +726,6 @@ a { color: var(--accent-color); text-decoration: none; }
   background: var(--sidebar-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1.5px solid var(--border-color);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   z-index: 49;
   padding: var(--space-sm) var(--space-md) var(--space-md);
@@ -771,7 +765,6 @@ a { color: var(--accent-color); text-decoration: none; }
 .mobile-menu-item:hover {
   background: var(--bg-glass);
   color: var(--text-primary);
-  border-color: var(--border-color);
 }
 
 .mobile-menu-item--active {
@@ -860,7 +853,6 @@ a { color: var(--accent-color); text-decoration: none; }
   padding: 10px var(--space-md);
   border-radius: var(--radius-md);
   background: var(--bg-tertiary);
-  border: 1.5px solid var(--border-color);
   cursor: pointer;
   transition: all 0.15s ease;
   box-shadow: var(--clay-input-shadow);

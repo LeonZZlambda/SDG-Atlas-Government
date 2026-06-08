@@ -48,7 +48,7 @@ export function ImpactCalculator() {
         
         {/* LEFT PANEL: SIMULATION SLIDERS */}
         <div className="clay-card" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <h3 style={{ fontSize: '20px', borderBottom: '1px solid var(--border-dark)', paddingBottom: '10px' }}>
+          <h3 style={{ fontSize: '20px', paddingBottom: '10px', marginBottom: '20px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
             Parâmetros do Cenário
           </h3>
 
@@ -236,7 +236,7 @@ export function ImpactCalculator() {
 
           {/* Explainability Breakdown Card */}
           <div className="clay-card">
-            <h3 style={{ fontSize: '16px', marginBottom: '14px', borderBottom: '1px solid var(--border-dark)', paddingBottom: '6px' }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '14px', paddingBottom: '6px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
               {t('calculator_explain_title')}
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -257,9 +257,11 @@ export function ImpactCalculator() {
           {/* Tradeoffs List Warnings */}
           <div className="clay-card" style={{
             background: project.tradeoffs.length > 0 ? 'rgba(239,68,68,0.04)' : 'rgba(16,185,129,0.04)',
-            border: project.tradeoffs.length > 0 ? '1px solid rgba(239,68,68,0.2)' : '1px solid rgba(16,185,129,0.2)'
+            boxShadow: project.tradeoffs.length > 0 
+              ? 'inset -2px -2px 6px rgba(239,68,68,0.1), inset 2px 2px 6px rgba(255,255,255,0.8)'
+              : 'inset -2px -2px 6px rgba(16,185,129,0.1), inset 2px 2px 6px rgba(255,255,255,0.8)'
           }}>
-            <h3 style={{ fontSize: '16px', marginBottom: '14px', color: project.tradeoffs.length > 0 ? '#ef4444' : '#10b981', borderBottom: '1px solid var(--border-dark)', paddingBottom: '8px' }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '14px', color: project.tradeoffs.length > 0 ? '#ef4444' : '#10b981', paddingBottom: '8px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
               {t('calculator_tradeoffs_title')}
             </h3>
             {project.tradeoffs.length > 0 ? (

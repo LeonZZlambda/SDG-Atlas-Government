@@ -135,7 +135,7 @@ export function Dashboard() {
 
       {/* SAVED PLANS LIST */}
       <div className="clay-card">
-        <h3 style={{ fontSize: '20px', marginBottom: '20px', borderBottom: '1px solid var(--border-dark)', paddingBottom: '10px', textAlign: 'left' }}>
+        <h3 style={{ fontSize: '20px', marginBottom: '20px', paddingBottom: '10px', boxShadow: 'inset 0 -1px 0 var(--border-dark)', textAlign: 'left' }}>
           {t('dashboard_history_title')}
         </h3>
 
@@ -148,7 +148,7 @@ export function Dashboard() {
                   padding: '20px',
                   borderRadius: '16px',
                   background: 'rgba(0,0,0,0.02)',
-                  border: '1px solid var(--border-color)',
+                  boxShadow: 'inset -2px -2px 6px rgba(0,0,0,0.06), inset 2px 2px 6px rgba(255,255,255,0.8)',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '14px',
@@ -216,8 +216,9 @@ export function Dashboard() {
                   flexWrap: 'wrap',
                   fontSize: '12px',
                   color: 'var(--text-muted)',
-                  borderTop: '1px solid var(--border-dark)',
-                  paddingTop: '10px'
+                  paddingTop: '10px',
+                  marginTop: '10px',
+                  boxShadow: 'inset 0 1px 0 var(--border-dark)'
                 }}>
                   <span>💰 Orçamento: <strong>${p.inputs.budget.toLocaleString()}</strong></span>
                   <span>👥 Beneficiários: <strong>{p.inputs.beneficiaries}</strong></span>

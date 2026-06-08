@@ -36,7 +36,6 @@ export function ODSCard({ id, name, shortDesc, color, isSelected, onToggle }: OD
         gap: '12px',
         background: isSelected ? color : 'var(--bg-glass)',
         color: isSelected ? '#ffffff' : 'var(--text-primary)',
-        borderColor: isSelected ? 'rgba(255, 255, 255, 0.4)' : 'var(--border-color)',
         boxShadow: isSelected
           ? `0 10px 20px ${color}40, inset -4px -4px 8px rgba(0,0,0,0.2), inset 4px 4px 8px rgba(255,255,255,0.25)`
           : 'var(--clay-card-shadow)',
@@ -85,8 +84,7 @@ export function ODSCard({ id, name, shortDesc, color, isSelected, onToggle }: OD
           flexShrink: 0,
           marginTop: '4px',
           background: isSelected ? '#ffffff' : color,
-          border: isSelected ? 'none' : '2px solid var(--border-color)',
-          boxShadow: isSelected ? '0 0 6px rgba(255,255,255,0.8)' : 'none',
+          boxShadow: isSelected ? '0 0 6px rgba(255,255,255,0.8)' : 'inset -1px -1px 3px rgba(0,0,0,0.15)',
         }} />
       </div>
 
