@@ -3,14 +3,11 @@
    Senior UI/UX Implementation
    ============================================================ */
 
-/* ── Google Fonts ─────────────────────────────────────── */
-/* Fonts loaded non-blocking via index.html — font-display swap ensures text is visible immediately */
-
 /* ── Design Tokens ─────────────────────────────────────── */
 :root {
-  /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-heading: 'Outfit', 'Inter', sans-serif;
+  /* Typography — system stack avoids web-font CLS and external requests */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Spacing scale */
   --space-xxs: 4px;
@@ -672,23 +669,28 @@ a { color: var(--accent-color); text-decoration: none; }
   z-index: 50;
   justify-content: space-between;
   align-items: center;
+  height: 56px;
+  min-height: 56px;
   padding: var(--space-sm) var(--space-md);
   background: var(--sidebar-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1.5px solid var(--border-color);
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  contain: layout style;
 }
 
 .mobile-header-brand {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  min-width: 0;
 }
 
 .mobile-header-badge {
   width: 32px;
   height: 32px;
+  flex-shrink: 0;
   border-radius: 10px;
   background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
   display: flex;
@@ -705,11 +707,19 @@ a { color: var(--accent-color); text-decoration: none; }
   font-size: 1rem;
   font-weight: 800;
   color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mobile-menu-toggle {
-  padding: 8px 12px;
-  min-height: 36px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  flex-shrink: 0;
+  contain: layout style;
 }
 
 /* ── Mobile Menu Dropdown ───────────────────────────────── */
@@ -725,6 +735,19 @@ a { color: var(--accent-color); text-decoration: none; }
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   z-index: 49;
   padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+/* Increase mobile-menu opacity for better readability */
+.mobile-menu {
+  background: rgba(248, 250, 255, 0.96);
+}
+
+[data-theme='dark'] .mobile-menu {
+  background: rgba(15, 17, 23, 0.98);
+}
+
+[data-theme='high-contrast'] .mobile-menu {
+  background: #000000;
 }
 
 .mobile-menu-item {
@@ -894,7 +917,8 @@ a { color: var(--accent-color); text-decoration: none; }
 /* ── Responsive Breakpoints ─────────────────────────────── */
 @media (max-width: 900px) {
   .sidebar { display: none; }
-  .mobile-header { display: flex; }
+  .app-container { flex-direction: column; }
+  .mobile-header { display: flex; width: 100%; flex-shrink: 0; }
   .main-content { padding: var(--space-md); }
 }
 
@@ -1098,8 +1122,6 @@ a { color: var(--accent-color); text-decoration: none; }
 }
 
 /* ── ODSMap — reimplementação ───────────────────────────── */
-.ods-map-section {}
-
 .view-header { margin-bottom: var(--space-xl); }
 
 .view-header h2,
@@ -1343,4 +1365,24 @@ a { color: var(--accent-color); text-decoration: none; }
   line-height: 1.5;
   margin: 0;
   max-width: 28ch;
+}
+
+.tab-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.tab-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--bg-tertiary);
+  border-top-color: var(--accent-primary, #6366f1);
+  border-radius: 50%;
+  animation: tab-spin 0.7s linear infinite;
+}
+
+@keyframes tab-spin {
+  to { transform: rotate(360deg); }
 }

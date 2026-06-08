@@ -1,19 +1,40 @@
+import { lazy, Suspense } from 'preact/compat';
 import { PlatformProvider, usePlatform } from './context/PlatformContext';
 import { AppLayout } from './components/AppLayout';
 import { Onboarding } from './components/Onboarding';
 import { Toast } from './components/Toast';
-import { ODSGrid } from './components/ODSGrid';
-import { ODSRandomizer } from './components/ODSRandomizer';
-import { ProjectPlanner } from './components/ProjectPlanner';
-import { ImpactCalculator } from './components/ImpactCalculator';
-import { ODSMap } from './components/ODSMap';
-import { Dashboard } from './components/Dashboard';
 import { AnimatePresence, motion } from 'framer-motion';
+
+const ODSGrid = lazy(() =>
+  import('./components/ODSGrid').then((m) => ({ default: m.ODSGrid }))
+);
+const ODSRandomizer = lazy(() =>
+  import('./components/ODSRandomizer').then((m) => ({ default: m.ODSRandomizer }))
+);
+const ProjectPlanner = lazy(() =>
+  import('./components/ProjectPlanner').then((m) => ({ default: m.ProjectPlanner }))
+);
+const ImpactCalculator = lazy(() =>
+  import('./components/ImpactCalculator').then((m) => ({ default: m.ImpactCalculator }))
+);
+const ODSMap = lazy(() =>
+  import('./components/ODSMap').then((m) => ({ default: m.ODSMap }))
+);
+const Dashboard = lazy(() =>
+  import('./components/Dashboard').then((m) => ({ default: m.Dashboard }))
+);
+
+function TabFallback() {
+  return (
+    <div className="tab-loading" aria-busy="true">
+      <div className="tab-loading-spinner" />
+    </div>
+  );
+}
 
 function AppContent() {
   const { state } = usePlatform();
 
-  // Render view depending on the selected tab
   const renderTabContent = () => {
     switch (state.currentTab) {
       case 'selection':
@@ -35,13 +56,9 @@ function AppContent() {
 
   return (
     <AppLayout>
-      {/* Step-by-step introduction onboarding tutorial */}
       <Onboarding />
-
-      {/* Global alert toasts */}
       <Toast />
 
-      {/* Page Transitions */}
       <AnimatePresence mode="wait">
         <motion.div
           key={state.currentTab}
@@ -50,7 +67,9 @@ function AppContent() {
           exit={{ opacity: 0, y: -15 }}
           transition={{ duration: 0.22, ease: 'easeInOut' }}
         >
-          {renderTabContent()}
+          <Suspense fallback={<TabFallback />}>
+            {renderTabContent()}
+          </Suspense>
         </motion.div>
       </AnimatePresence>
     </AppLayout>

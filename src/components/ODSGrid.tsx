@@ -110,13 +110,13 @@ export function ODSGrid() {
       </motion.div>
 
       {/* Proceed Navigation Button */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px', flexWrap: 'wrap' }}>
         {state.selectedOds.length > 0 && (
           <button
             type="button"
             onClick={() => dispatch({ type: 'SET_TAB', payload: 'planner' })}
             className="clay-button"
-            style={{ padding: '12px 24px' }}
+            style={{ padding: '12px 24px', fontSize: '14px' }}
           >
             {t('selection_next_planner')} →
           </button>
@@ -126,11 +126,25 @@ export function ODSGrid() {
           type="button"
           onClick={handleNext}
           className="clay-button clay-button-primary"
-          style={{ padding: '12px 28px' }}
+          style={{ padding: '12px 28px', fontSize: '14px' }}
         >
           {t('selection_next_shuffler')} →
         </button>
       </div>
+
+      <style>{`
+        @media (max-width: 400px) {
+          section > div[style*="justify-content: flex-end"] {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          section > div[style*="justify-content: flex-end"] button {
+            width: 100%;
+            padding: 10px 16px !important;
+            font-size: 13px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
