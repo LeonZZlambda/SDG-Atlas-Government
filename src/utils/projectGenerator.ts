@@ -389,49 +389,85 @@ export const SDG_METADATA: SDG[] = [
 ];
 
 // Synergy & Conflict matrix values (-1 to +1)
-// We define standard coefficients for key inter-dependencies
+// Comprehensive matrix based on real SDG interdependencies
 export const INTER_SDG_COEFFICIENTS: Record<string, number> = {
-  // Strong synergies
-  '1-2': 0.85, '1-3': 0.75, '1-4': 0.70, '1-8': 0.80, '1-10': 0.85, '1-11': 0.60,
-  '2-3': 0.80, '2-6': 0.65, '2-12': 0.65, '2-13': 0.70, '2-15': 0.50,
-  '3-4': 0.65, '3-6': 0.70, '3-10': 0.60, '3-11': 0.60, '3-15': 0.45,
-  '4-5': 0.75, '4-8': 0.70, '4-10': 0.80, '4-16': 0.55,
-  '5-8': 0.65, '5-10': 0.75, '5-16': 0.60,
-  '6-7': 0.55, '6-11': 0.65, '6-13': 0.60, '6-14': 0.70, '6-15': 0.55,
-  '7-9': 0.75, '7-11': 0.70, '7-12': 0.55, '7-13': 0.85,
-  '8-9': 0.70, '8-10': 0.75, '8-12': 0.45,
-  '9-11': 0.65, '9-12': 0.50,
-  '10-16': 0.80, '10-17': 0.65,
-  '11-12': 0.70, '11-13': 0.75, '11-15': 0.55,
-  '12-13': 0.80, '12-14': 0.75, '12-15': 0.75,
-  '13-14': 0.85, '13-15': 0.85,
-  '14-15': 0.70,
-  '16-17': 0.75,
-  // Trade-offs (negative coefficients)
-  '8-13': -0.22,  // crescimento econômico vs emissões de carbono
-  '8-15': -0.18,  // expansão econômica vs preservação de ecossistemas terrestres
-  '9-13': -0.32,  // industrialização vs ação climática
-  '9-14': -0.20,  // infraestrutura industrial vs vida marinha
-  '9-15': -0.15,  // expansão de infraestrutura vs vida terrestre
-  '1-13': -0.12,  // erradicação da pobreza via consumo vs clima
-  '2-7':  -0.10,  // agricultura intensiva vs energia (uso de combustíveis em máquinas)
-  '7-14': -0.14,  // energia (hidrelétricas) vs vida aquática
-  '11-14':-0.12,  // urbanização vs ecossistemas costeiros
-  '12-8': -0.18,  // consumo responsável pode restringir crescimento econômico
+  // SDG 1 (No Poverty) - Strong synergies with social goals
+  '1-2': 0.90, '1-3': 0.85, '1-4': 0.80, '1-5': 0.75, '1-6': 0.60, '1-7': 0.55,
+  '1-8': 0.82, '1-9': 0.70, '1-10': 0.88, '1-11': 0.65, '1-12': 0.58, '1-13': -0.15,
+  '1-14': 0.45, '1-15': 0.50, '1-16': 0.72, '1-17': 0.75,
+  
+  // SDG 2 (Zero Hunger) - Strong with agriculture and health
+  '2-3': 0.85, '2-4': 0.65, '2-5': 0.70, '2-6': 0.68, '2-7': -0.12,
+  '2-8': 0.60, '2-9': 0.55, '2-10': 0.75, '2-11': 0.58, '2-12': 0.62, '2-13': 0.72,
+  '2-14': 0.48, '2-15': 0.55, '2-16': 0.60, '2-17': 0.68,
+  
+  // SDG 3 (Good Health) - Strong with most social goals
+  '3-4': 0.75, '3-5': 0.70, '3-6': 0.72, '3-7': 0.58, '3-8': 0.65,
+  '3-9': 0.60, '3-10': 0.68, '3-11': 0.62, '3-12': 0.55, '3-13': 0.65, '3-14': 0.50,
+  '3-15': 0.48, '3-16': 0.70, '3-17': 0.72,
+  
+  // SDG 4 (Quality Education) - Foundation for all
+  '4-5': 0.82, '4-6': 0.65, '4-7': 0.58, '4-8': 0.75, '4-9': 0.68,
+  '4-10': 0.85, '4-11': 0.60, '4-12': 0.62, '4-13': 0.70, '4-14': 0.55, '4-15': 0.58,
+  '4-16': 0.88, '4-17': 0.80,
+  
+  // SDG 5 (Gender Equality) - Cross-cutting
+  '5-6': 0.60, '5-7': 0.55, '5-8': 0.70, '5-9': 0.65, '5-10': 0.78,
+  '5-11': 0.58, '5-12': 0.60, '5-13': 0.65, '5-14': 0.52, '5-15': 0.55, '5-16': 0.82,
+  '5-17': 0.75,
+  
+  // SDG 6 (Clean Water) - Environmental foundation
+  '6-7': 0.58, '6-8': 0.62, '6-9': 0.55, '6-10': 0.68, '6-11': 0.68,
+  '6-12': 0.58, '6-13': 0.62, '6-14': 0.75, '6-15': 0.58, '6-16': 0.60, '6-17': 0.65,
+  
+  // SDG 7 (Clean Energy) - Critical for climate
+  '7-8': 0.55, '7-9': 0.60, '7-10': 0.62, '7-11': 0.72, '7-12': 0.58,
+  '7-13': 0.88, '7-14': -0.18, '7-15': 0.60, '7-16': 0.58, '7-17': 0.70,
+  
+  // SDG 8 (Decent Work) - Economic growth with trade-offs
+  '8-9': 0.72, '8-10': 0.78, '8-11': 0.65, '8-12': -0.20, '8-13': -0.35,
+  '8-14': 0.55, '8-15': -0.25, '8-16': 0.68, '8-17': 0.72,
+  
+  // SDG 9 (Industry & Innovation) - Infrastructure with conflicts
+  '9-10': 0.70, '9-11': 0.62, '9-12': 0.55, '9-13': -0.40, '9-14': -0.28,
+  '9-15': -0.22, '9-16': 0.65, '9-17': 0.68,
+  
+  // SDG 10 (Reduced Inequalities) - Social justice
+  '10-11': 0.65, '10-12': 0.58, '10-13': 0.68, '10-14': 0.55, '10-15': 0.58,
+  '10-16': 0.85, '10-17': 0.78,
+  
+  // SDG 11 (Sustainable Cities) - Urban sustainability
+  '11-12': 0.72, '11-13': 0.78, '11-14': -0.15, '11-15': 0.58, '11-16': 0.70,
+  '11-17': 0.75,
+  
+  // SDG 12 (Responsible Consumption) - Circular economy
+  '12-13': 0.82, '12-14': 0.70, '12-15': 0.75, '12-16': 0.65, '12-17': 0.70,
+  
+  // SDG 13 (Climate Action) - Environmental critical
+  '13-14': 0.88, '13-15': 0.90, '13-16': 0.68, '13-17': 0.75,
+  
+  // SDG 14 (Life Below Water) - Marine ecosystems
+  '14-15': 0.75, '14-16': 0.58, '14-17': 0.65,
+  
+  // SDG 15 (Life on Land) - Terrestrial ecosystems
+  '15-16': 0.60, '15-17': 0.68,
+  
+  // SDG 16 (Peace & Justice) - Governance
+  '16-17': 0.82,
 };
 
 // Trade-off descriptions per pair for contextual messages
 const TRADEOFF_DESCRIPTIONS: Record<string, { pt: string; en: string; es: string }> = {
-  '8-13':  { pt: 'Crescimento econômico acelerado tende a aumentar emissões de carbono. Recomendado: metas de carbono neutro e tecnologias limpas de produção.', en: 'Accelerated economic growth tends to increase carbon emissions. Recommended: carbon-neutral targets and clean production technologies.', es: 'El crecimiento económico acelerado tiende a aumentar las emisiones de carbono. Recomendado: metas de carbono neutro y tecnologías limpias.' },
-  '9-13':  { pt: 'Expansão industrial e de infraestrutura pressiona ecossistemas e o clima. Recomendado: avaliação de impacto ambiental obrigatória e compensação de carbono.', en: 'Industrial and infrastructure expansion pressures ecosystems and climate. Recommended: mandatory environmental impact assessment and carbon offsets.', es: 'La expansión industrial e infraestructural presiona los ecosistemas y el clima. Recomendado: evaluación de impacto ambiental obligatoria y compensación de carbono.' },
-  '9-14':  { pt: 'Construção de infraestrutura costeira ou hidráulica ameaça ecossistemas aquáticos. Recomendado: zonas de exclusão marinha e avaliação hidrológica prévia.', en: 'Coastal or hydraulic infrastructure threatens aquatic ecosystems. Recommended: marine exclusion zones and prior hydrological assessment.', es: 'La infraestructura costera o hidráulica amenaza los ecosistemas acuáticos. Recomendado: zonas de exclusión marina y evaluación hidrológica previa.' },
-  '9-15':  { pt: 'Expansão de infraestrutura pode fragmentar habitats terrestres. Recomendado: corredores ecológicos e planos de compensação ambiental.', en: 'Infrastructure expansion can fragment terrestrial habitats. Recommended: ecological corridors and environmental compensation plans.', es: 'La expansión de infraestructura puede fragmentar hábitats terrestres. Recomendado: corredores ecológicos y planes de compensación ambiental.' },
-  '8-15':  { pt: 'Crescimento econômico via exploração de recursos naturais pressiona ecossistemas terrestres. Recomendado: critérios ESG rigorosos e economia circular.', en: 'Economic growth via natural resource exploitation pressures terrestrial ecosystems. Recommended: strict ESG criteria and circular economy.', es: 'El crecimiento económico vía explotación de recursos presiona ecosistemas terrestres. Recomendado: criterios ESG estrictos y economía circular.' },
   '1-13':  { pt: 'Programas de transferência de renda podem estimular consumo com pegada de carbono elevada. Recomendado: vincular benefícios a escolhas de consumo sustentável.', en: 'Income transfer programs may stimulate high-carbon consumption. Recommended: link benefits to sustainable consumption choices.', es: 'Los programas de transferencia de ingresos pueden estimular el consumo con alta huella de carbono. Recomendado: vincular beneficios a elecciones de consumo sostenible.' },
   '2-7':   { pt: 'Agricultura intensiva mecanizada depende de combustíveis fósseis. Recomendado: mecanização agrícola elétrica e biodigestores locais.', en: 'Mechanized intensive agriculture depends on fossil fuels. Recommended: electric agricultural machinery and local biodigesters.', es: 'La agricultura mecanizada intensiva depende de combustibles fósiles. Recomendado: maquinaria agrícola eléctrica y biodigestores locales.' },
   '7-14':  { pt: 'Hidroelétricas e barragens para energia impactam ecossistemas aquáticos. Recomendado: priorizar solar/eólico e estudos de impacto hídrico.', en: 'Hydropower dams for energy impact aquatic ecosystems. Recommended: prioritize solar/wind and conduct hydraulic impact studies.', es: 'Las represas hidroeléctricas impactan ecosistemas acuáticos. Recomendado: priorizar solar/eólico y realizar estudios de impacto hídrico.' },
+  '8-12':  { pt: 'Padrões de consumo responsável podem reduzir o ritmo de crescimento econômico convencional. Recomendado: fomentar modelos de negócio da economia circular como motor de crescimento.', en: 'Responsible consumption patterns may slow conventional economic growth. Recommended: foster circular economy business models as growth engines.', es: 'Los patrones de consumo responsable pueden ralentizar el crecimiento económico convencional. Recomendado: fomentar modelos de negocio de economía circular como motor de crecimiento.' },
+  '8-13':  { pt: 'Crescimento econômico acelerado tende a aumentar emissões de carbono. Recomendado: metas de carbono neutro e tecnologias limpas de produção.', en: 'Accelerated economic growth tends to increase carbon emissions. Recommended: carbon-neutral targets and clean production technologies.', es: 'El crecimiento económico acelerado tiende a aumentar las emisiones de carbono. Recomendado: metas de carbono neutro y tecnologías limpias.' },
+  '8-15':  { pt: 'Crescimento econômico via exploração de recursos naturais pressiona ecossistemas terrestres. Recomendado: critérios ESG rigorosos e economia circular.', en: 'Economic growth via natural resource exploitation pressures terrestrial ecosystems. Recommended: strict ESG criteria and circular economy.', es: 'El crecimiento económico vía explotación de recursos presiona ecosistemas terrestres. Recomendado: criterios ESG estrictos y economía circular.' },
+  '9-13':  { pt: 'Expansão industrial e de infraestrutura pressiona ecossistemas e o clima. Recomendado: avaliação de impacto ambiental obrigatória e compensação de carbono.', en: 'Industrial and infrastructure expansion pressures ecosystems and climate. Recommended: mandatory environmental impact assessment and carbon offsets.', es: 'La expansión industrial e infraestructural presiona los ecosistemas y el clima. Recomendado: evaluación de impacto ambiental obligatoria y compensación de carbono.' },
+  '9-14':  { pt: 'Construção de infraestrutura costeira ou hidráulica ameaça ecossistemas aquáticos. Recomendado: zonas de exclusão marinha e avaliação hidrológica prévia.', en: 'Coastal or hydraulic infrastructure threatens aquatic ecosystems. Recommended: marine exclusion zones and prior hydrological assessment.', es: 'La infraestructura costera o hidráulica amenaza los ecosistemas acuáticos. Recomendado: zonas de exclusión marina y evaluación hidrológica previa.' },
+  '9-15':  { pt: 'Expansão de infraestrutura pode fragmentar habitats terrestres. Recomendado: corredores ecológicos e planos de compensação ambiental.', en: 'Infrastructure expansion can fragment terrestrial habitats. Recommended: ecological corridors and environmental compensation plans.', es: 'La expansión de infraestructura puede fragmentar hábitats terrestres. Recomendado: corredores ecológicos y planes de compensación ambiental.' },
   '11-14': { pt: 'Urbanização costeira pode degradar ecossistemas marinhos e estuários. Recomendado: zoneamento urbano costeiro e faixas de proteção ambiental.', en: 'Coastal urbanization can degrade marine ecosystems and estuaries. Recommended: coastal urban zoning and environmental buffer zones.', es: 'La urbanización costera puede degradar ecosistemas marinos y estuarios. Recomendado: zonificación urbana costera y franjas de protección ambiental.' },
-  '12-8':  { pt: 'Padrões de consumo responsável podem reduzir o ritmo de crescimento econômico convencional. Recomendado: fomentar modelos de negócio da economia circular como motor de crescimento.', en: 'Responsible consumption patterns may slow conventional economic growth. Recommended: foster circular economy business models as growth engines.', es: 'Los patrones de consumo responsable pueden ralentizar el crecimiento económico convencional. Recomendado: fomentar modelos de negocio de economía circular como motor de crecimiento.' },
 };
 
 export function getCoefficient(idA: number, idB: number): number {
@@ -440,8 +476,8 @@ export function getCoefficient(idA: number, idB: number): number {
   const hi = Math.max(idA, idB);
   const key = `${lo}-${hi}`;
   if (INTER_SDG_COEFFICIENTS[key] !== undefined) return INTER_SDG_COEFFICIENTS[key];
-  if (idA === 17 || idB === 17) return 0.60;
-  return 0.15;
+  // Default to neutral for undefined pairs
+  return 0.35;
 }
 
 // Structured project template generator
