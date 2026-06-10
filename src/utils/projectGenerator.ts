@@ -1,3 +1,5 @@
+import { calculateDegreeCentrality, calculateBetweennessCentrality, type Graph } from './graphAlgorithms';
+
 export interface SDG {
   id: number;
   color: string;
@@ -528,15 +530,41 @@ export function generateProject(
   // Draw core SDGs metadata
   const selectedSDGs = SDG_METADATA.filter(ods => selectedOdsIds.includes(ods.id));
 
-  // Suggested Project Name based on first two SDGs
-  const firstSDG = selectedSDGs[0];
-  const secondSDG = selectedSDGs[1];
-  let suggestedName = '';
-  if (selectedSDGs.length === 1) {
-    suggestedName = `${localizedData.projPrefix} ${firstSDG.name[lang]}`;
-  } else {
-    suggestedName = `${firstSDG.name[lang]} & ${secondSDG.name[lang]} - ${localizedData.projMid}`;
-  }
+  // Suggested Project Name - unique based on all selected SDGs and their characteristics
+  const generateUniqueName = () => {
+    const sdgKeywords = selectedSDGs.map(s => {
+      const name = s.name[lang].toLowerCase();
+      if (name.includes('água') || name.includes('water') || name.includes('agua')) return 'Hidro';
+      if (name.includes('energia') || name.includes('energy') || name.includes('energía')) return 'Ener';
+      if (name.includes('clima') || name.includes('climate') || name.includes('clima')) return 'Clima';
+      if (name.includes('saúde') || name.includes('health') || name.includes('salud')) return 'Vital';
+      if (name.includes('educação') || name.includes('education') || name.includes('educación')) return 'Saber';
+      if (name.includes('igualdade') || name.includes('equality') || name.includes('igualdad')) return 'Equi';
+      if (name.includes('trabalho') || name.includes('work') || name.includes('trabajo')) return 'Labor';
+      if (name.includes('indústria') || name.includes('industry') || name.includes('industria')) return 'Tech';
+      if (name.includes('cidades') || name.includes('cities') || name.includes('ciudades')) return 'Urbano';
+      if (name.includes('consumo') || name.includes('consumption') || name.includes('consumo')) return 'Circ';
+      if (name.includes('vida') || name.includes('life') || name.includes('vida')) return 'Bio';
+      if (name.includes('paz') || name.includes('peace') || name.includes('paz')) return 'Paz';
+      if (name.includes('pobreza') || name.includes('poverty') || name.includes('pobreza')) return 'Social';
+      if (name.includes('fome') || name.includes('hunger') || name.includes('hambre')) return 'Nutri';
+      return 'SDG' + s.id;
+    });
+    
+    const uniqueKeywords = [...new Set(sdgKeywords)];
+    const keywordStr = uniqueKeywords.slice(0, 3).join('-');
+    
+    if (selectedSDGs.length === 1) {
+      return `${localizedData.projPrefix} ${keywordStr}`;
+    }
+    
+    const suffixes = ['Nexus', 'Hub', 'Lab', 'Alliance', 'Network', 'Matrix', 'Bridge', 'Fusion'];
+    const suffixIndex = selectedSDGs.reduce((acc, s) => acc + s.id, 0) % suffixes.length;
+    
+    return `${keywordStr} ${suffixes[suffixIndex]}`;
+  };
+  
+  const suggestedName = generateUniqueName();
 
   // Aggregate checklists/objectives from chosen SDGs
   const objectives: string[] = [];
@@ -628,19 +656,163 @@ export function generateProject(
   ];
 
   // Reach and sustainability metrics calculation
-  // Reach: logarithmic scale of beneficiaries
-  const reachEstimated = Math.round(inputs.beneficiaries * (1.1 + Math.random() * 0.1));
+  const synergyMultiplier = 1 + (synergyBalanceIndex * 0.3); // Synergy boosts reach
+  const efficiencyMultiplier = Math.min(1.5, inputs.teamSize / Math.max(1, inputs.beneficiaries * 0.01)); // Team efficiency
+  const reachEstimated = Math.round(inputs.beneficiaries * synergyMultiplier * efficiencyMultiplier);
   
-  // Sustainability scale: based on duration & synergy balance
-  // Projects of longer duration aligned with more synergistic SDGs have higher sustainability scales
   const sustainabilityIndex = Math.min(100, Math.max(20, Math.round(
     (inputs.duration / 24) * 35 + (synergyBalanceIndex * 45) + (inputs.teamSize > 5 ? 20 : 10)
   )));
 
-  // SDG Alignment score: direct relation to the quantity of goals and synergy balance
   const alignmentScore = Math.min(100, Math.max(10, Math.round(
     (selectedOdsIds.length / 17) * 50 + (synergyBalanceIndex * 50)
   )));
+
+  // 1. Unified Explainable Feasibility Score
+  const resourceCapacity = Math.min(100, (inputs.budget / Math.max(1, selectedOdsIds.length * 15000)) * 50 + (inputs.teamSize / Math.max(1, selectedOdsIds.length * 2)) * 50);
+  const implementationSimplicity = Math.max(10, Math.min(100, 100 - (selectedOdsIds.length * 6) + (inputs.duration >= 12 ? 15 : 0)));
+  const coordinationComplexity = Math.max(0, 100 - (selectedOdsIds.length * 10)); // Coordination burden
+  const conflictPenalty = Math.max(0, 100 - (tradeoffs.length * 20));
+  const feasibility = Math.round(0.35 * resourceCapacity + 0.35 * implementationSimplicity + 0.20 * coordinationComplexity + 0.10 * conflictPenalty);
+
+  // 2. Normalized Complexity Index (0-100)
+  const stakeholdersCount = selectedOdsIds.length * 2 + 2;
+  const dependenciesCount = Math.max(1, selectedOdsIds.length * 1.5);
+
+  const graph: Graph = {
+    nodes: selectedOdsIds.map(id => ({
+      id,
+      label: SDG_METADATA.find(s => s.id === id)?.name.pt || `ODS ${id}`,
+    })),
+    edges: connections.map(c => ({ from: c.source, to: c.target, weight: c.value }))
+  };
+
+  const degCentrality = calculateDegreeCentrality(graph);
+  const btwCentrality = calculateBetweennessCentrality(graph);
+
+  let betweennessSum = 0;
+  btwCentrality.forEach(val => betweennessSum += val);
+
+  const stakeholdersNorm = Math.min(100, (stakeholdersCount / 15) * 100);
+  const dependenciesNorm = Math.min(100, (dependenciesCount / 10) * 100);
+  // Use observed maximum for betweenness normalization instead of arbitrary constant
+  const maxBetweenness = Math.max(...Array.from(btwCentrality.values()), 0.001);
+  const betweennessNorm = Math.min(100, (betweennessSum / maxBetweenness) * 100);
+  const tradeoffNorm = Math.min(100, (tradeoffs.length / 5) * 100);
+
+  const complexity = Math.round(0.3 * stakeholdersNorm + 0.3 * dependenciesNorm + 0.3 * betweennessNorm + 0.1 * tradeoffNorm);
+
+  // 3. Unified SystemicInfluenceScore for all active SDGs
+  const systemicInfluenceScores: Record<number, number> = {};
+  selectedOdsIds.forEach(id => {
+    const degree = degCentrality.get(id) || 0;
+    const betweenness = btwCentrality.get(id) || 0;
+    
+    const positiveEdgesCount = connections.filter(c => 
+      (c.source === id || c.target === id) && c.value > 0
+    ).length;
+    const totalEdgesCount = connections.filter(c => c.source === id || c.target === id).length;
+    const positiveInfluence = totalEdgesCount > 0 ? positiveEdgesCount / totalEdgesCount : 0;
+
+    systemicInfluenceScores[id] = 0.4 * degree + 0.3 * betweenness + 0.3 * positiveInfluence;
+  });
+
+  // 4. Leave-One-Out Sensitivity Analysis
+  const sensitivity = selectedOdsIds.map(currentId => {
+    const remainingSDGs = selectedOdsIds.filter(id => id !== currentId);
+    if (remainingSDGs.length === 0) {
+      return { sdgId: currentId, contribution: overallImpactScore, reason: 'Único ODS selecionado' };
+    }
+
+    let remTotalCoeff = 0;
+    let remPairs = 0;
+    for (let i = 0; i < remainingSDGs.length; i++) {
+      for (let j = i + 1; j < remainingSDGs.length; j++) {
+        remTotalCoeff += getCoefficient(remainingSDGs[i], remainingSDGs[j]);
+        remPairs++;
+      }
+    }
+    const remSBI = remPairs > 0 ? remTotalCoeff / remPairs : 1.0;
+    const remSbiFactor = Math.max(0, remSBI * 35);
+    const remCountFactor = Math.min(30, remainingSDGs.length * 2.5);
+    const remTradeoffsCount = connections.filter(c => c.value < 0 && c.source !== currentId && c.target !== currentId).length;
+
+    const remImpact = Math.min(100, Math.max(10, Math.round(
+      40 + remSbiFactor + remCountFactor + efficiencyScore + teamFactor - riskDeduction - (remTradeoffsCount * 6)
+    )));
+
+    const contribution = Math.max(0, overallImpactScore - remImpact);
+
+    const degree = degCentrality.get(currentId) || 0;
+    const btw = btwCentrality.get(currentId) || 0;
+    let reason = 'Alta influência positiva';
+    if (degree > 0.4) {
+      reason = 'Alta centralidade de grau';
+    } else if (btw > 0.3) {
+      reason = 'Alta centralidade de intermediação';
+    } else if (contribution > 15) {
+      reason = 'Alto impacto sistêmico';
+    } else {
+      reason = 'Contribuição equilibrada';
+    }
+
+    return {
+      sdgId: currentId,
+      contribution,
+      reason
+    };
+  }).sort((a, b) => b.contribution - a.contribution);
+
+  // 5. Monte Carlo Light Simulation (100 iterations)
+  const monteCarloRuns = 100;
+  const simulatedImpacts: number[] = [];
+  const simulatedSustainabilities: number[] = [];
+  const simulatedFeasibilities: number[] = [];
+
+  for (let m = 0; m < monteCarloRuns; m++) {
+    const pBudget = inputs.budget * (0.9 + Math.random() * 0.2);
+    const pDuration = inputs.duration * (0.9 + Math.random() * 0.2);
+    const pTeamSize = Math.max(1, Math.round(inputs.teamSize * (0.9 + Math.random() * 0.2)));
+    const pBeneficiaries = Math.max(1, Math.round(inputs.beneficiaries * (0.9 + Math.random() * 0.2)));
+    const pSBI = Math.max(-1, Math.min(1, synergyBalanceIndex + (Math.random() * 0.2 - 0.1)));
+
+    const pSbiFactor = Math.max(0, pSBI * 35);
+    const pCountFactor = Math.min(30, selectedOdsIds.length * 2.5);
+
+    const pCostPerBeneficiary = pBudget / Math.max(1, pBeneficiaries);
+    let pEfficiencyScore = 20;
+    if (pCostPerBeneficiary > 1000) pEfficiencyScore = 5;
+    else if (pCostPerBeneficiary > 200) pEfficiencyScore = 12;
+    else if (pCostPerBeneficiary > 20) pEfficiencyScore = 18;
+
+    const pTeamPerBeneficiary = pTeamSize / Math.max(1, pBeneficiaries);
+    const pTeamFactor = pTeamPerBeneficiary > 0.1 ? 5 : 10;
+    const pRiskDeduction = Math.round(inputs.riskLevel * 12);
+    const pConflictDeduction = tradeoffs.length * 6;
+
+    const pImpact = Math.min(100, Math.max(10, Math.round(40 + pSbiFactor + pCountFactor + pEfficiencyScore + pTeamFactor - pRiskDeduction - pConflictDeduction)));
+    const pSustain = Math.min(100, Math.max(20, Math.round((pDuration / 24) * 35 + (pSBI * 45) + (pTeamSize > 5 ? 20 : 10))));
+
+    const pResourceCapacity = Math.min(100, (pBudget / Math.max(1, selectedOdsIds.length * 15000)) * 50 + (pTeamSize / Math.max(1, selectedOdsIds.length * 2)) * 50);
+    const pImplementationSimplicity = Math.max(10, Math.min(100, 100 - (selectedOdsIds.length * 6) + (pDuration >= 12 ? 15 : 0)));
+    const pCoordinationComplexity = Math.max(0, 100 - (selectedOdsIds.length * 10));
+    const pConflictPenalty = Math.max(0, 100 - (tradeoffs.length * 20));
+    const pFeasibility = Math.round(0.35 * pResourceCapacity + 0.35 * pImplementationSimplicity + 0.20 * pCoordinationComplexity + 0.10 * pConflictPenalty);
+
+    simulatedImpacts.push(pImpact);
+    simulatedSustainabilities.push(pSustain);
+    simulatedFeasibilities.push(pFeasibility);
+  }
+
+  const mean = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
+  const stdDev = (arr: number[], avg: number) => {
+    const squareDiffs = arr.map(val => Math.pow(val - avg, 2));
+    return Math.sqrt(squareDiffs.reduce((a, b) => a + b, 0) / arr.length);
+  };
+
+  const stdDevImpact = Math.max(2, Math.round(stdDev(simulatedImpacts, mean(simulatedImpacts))));
+  const stdDevSustain = Math.max(2, Math.round(stdDev(simulatedSustainabilities, mean(simulatedSustainabilities))));
+  const stdDevFeasibility = Math.max(2, Math.round(stdDev(simulatedFeasibilities, mean(simulatedFeasibilities))));
 
   return {
     suggestedName,
@@ -660,6 +832,21 @@ export function generateProject(
     reachEstimated,
     sustainabilityIndex,
     alignmentScore,
+    feasibility,
+    complexity,
+    systemicInfluenceScores,
+    sensitivity,
+    monteCarloStats: {
+      stdDevImpact,
+      stdDevSustain,
+      stdDevFeasibility
+    },
+    feasibilityBreakdown: {
+      resourceCapacity: Math.round(resourceCapacity),
+      implementationSimplicity: Math.round(implementationSimplicity),
+      coordinationComplexity: Math.round(coordinationComplexity),
+      conflictPenalty: Math.round(conflictPenalty)
+    },
     costPerBeneficiary: parseFloat(costPerBeneficiary.toFixed(2))
   };
 }

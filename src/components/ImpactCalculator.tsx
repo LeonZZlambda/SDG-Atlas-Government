@@ -364,7 +364,7 @@ export function ImpactCalculator() {
               {/* SDG Alignment scale */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'clamp(10px, 1.2vw, 12px)', fontWeight: 700 }}>
-                  <span>Impacto Sistêmico</span>
+                  <span>Alinhamento ODS (MCDA)</span>
                   <span>{project.alignmentScore}/100</span>
                 </div>
                 <div style={{ width: '100%', height: '8px', borderRadius: '8px', background: 'var(--bg-tertiary)', overflow: 'hidden', boxShadow: 'inset -2px -2px 4px rgba(0,0,0,0.1), inset 2px 2px 4px rgba(255,255,255,0.1)' }}>
@@ -402,9 +402,7 @@ export function ImpactCalculator() {
           {/* Tradeoffs List Warnings with Severity Classification */}
           <div className="clay-card" style={{
             background: project.tradeoffs.length > 0 ? 'rgba(239,68,68,0.04)' : 'rgba(16,185,129,0.04)',
-            boxShadow: project.tradeoffs.length > 0 
-              ? 'inset -2px -2px 6px rgba(239,68,68,0.1), inset 2px 2px 6px rgba(255,255,255,0.8)'
-              : 'inset -2px -2px 6px rgba(16,185,129,0.1), inset 2px 2px 6px rgba(255,255,255,0.8)'
+            boxShadow: project.tradeoffs.length > 0 ? 'var(--clay-input-shadow)' : 'var(--clay-input-shadow)'
           }}>
             <h3 style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1rem)', marginBottom: '14px', color: project.tradeoffs.length > 0 ? '#ef4444' : '#10b981', paddingBottom: '8px', boxShadow: 'inset 0 -1px 0 var(--border-dark)' }}>
               {t('calculator_tradeoffs_title')}

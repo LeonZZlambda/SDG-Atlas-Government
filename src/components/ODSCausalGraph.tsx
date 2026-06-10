@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getCoefficient, SDG_METADATA } from '../utils/projectGenerator';
 import { 
   calculateDegreeCentrality, 
-  calculateBetweennessCentrality, 
   calculatePageRank,
   getGraphStatistics,
   type Graph,

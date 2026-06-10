@@ -335,13 +335,16 @@ export function findShortestPath(graph: Graph, from: number, to: number): number
   }
   
   // Reconstruct path
-  const path: number[] = [];
-  let current = to;
-  
-  while (current !== null) {
-    path.unshift(current);
-    current = previous.get(current) || null;
+const path: number[] = [];
+let currentNode = to;
+while (true) {
+  path.unshift(currentNode);
+  const prev = previous.get(currentNode);
+  if (prev === undefined || prev === null) {
+    break;
   }
+  currentNode = prev!;
+}
   
   return path[0] === from ? path : [];
 }
